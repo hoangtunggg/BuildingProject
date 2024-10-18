@@ -12,7 +12,7 @@ import com.javaweb.service.BuildingService;
 
 @RestController 
 public class BuildingAPI {
-	
+	// thay doi 
 	@Autowired
 	private BuildingService buildingService;
 
