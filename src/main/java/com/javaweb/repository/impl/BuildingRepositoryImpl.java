@@ -2,6 +2,7 @@ package com.javaweb.repository.impl;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,15 +10,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
 import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.entity.BuildingEntity;
-import com.javaweb.utils.ConnectionJDBCUtil;
 
 @Repository
+@PropertySource("classpath:application.properties")
+
 public class BuildingRepositoryImpl implements BuildingRepository{
+	
+	@Value("${spring.datasource.url}")
+	private String DB_URL;
+
+	@Value("${spring.datasource.username}")
+	private String USER;
+	
+	@Value("${spring.datasource.password}")
+	private String PASS;
 	
 	public static void joinTable(BuildingSearchBuilder buildingSearchBuilder, StringBuilder sql) {
 		Long staffId = buildingSearchBuilder.getStaffId();
@@ -112,7 +125,7 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 		sql.append(where);
 		List<BuildingEntity> result = new ArrayList<>();
 		
-		try(Connection conn = ConnectionJDBCUtil.getConnection();
+		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql.toString());){
 			
@@ -121,7 +134,7 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 				buildingEntity.setId(rs.getLong("b.id"));
 				buildingEntity.setName(rs.getString("b.name"));
 				buildingEntity.setWard(rs.getString("b.ward"));
-				buildingEntity.setDistrictid(rs.getLong("b.districtid"));
+//				buildingEntity.setDistrictid(rs.getLong("b.districtid"));
 				buildingEntity.setStreet(rs.getString("b.street"));
 				buildingEntity.setFloorArea(rs.getLong("b.floorarea"));
 				buildingEntity.setRentPrice(rs.getLong("b.rentprice"));

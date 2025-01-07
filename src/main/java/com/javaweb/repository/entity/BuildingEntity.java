@@ -1,18 +1,81 @@
 package com.javaweb.repository.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.ManyToAny;
+
+@Entity
+@Table(name="building")
+
+
 public class BuildingEntity {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="ward")
 	private String ward;
-	private Long districtid;
+	
+	@Column(name="street")
 	private String street;
+	
+	@Column(name="floorarea")
 	private Long floorArea;
+	
+	@Column(name="rentprice")
 	private Long rentPrice;
+	
+	@Column(name="servicefee")
 	private String serviceFee;
+	
+	@Column(name="brokeragefee")
 	private Long brokerageFee;
+	
+	@Column(name="managername")
 	private String managerName;
+	
+	@Column(name="managerphonenumber")
 	private String managerPhoneNumber;
+	
+	@Column(name="emptyarea")
 	private String emptyArea;
+	
+	@ManyToOne
+	@JoinColumn(name="districtid")
+	private DistrictEntity district;
+	
+	@OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
+	private List<RentAreaEntity> itemRentAreaEntities = new ArrayList<>();
+	
+	public List<RentAreaEntity> getItemRentAreaEntities() {
+		return itemRentAreaEntities;
+	}
+	public void setItemRentAreaEntities(List<RentAreaEntity> itemRentAreaEntities) {
+		this.itemRentAreaEntities = itemRentAreaEntities;
+	}
+	
+	public DistrictEntity getDistrict() {
+		return district;
+	}
+	public void setDistrict(DistrictEntity district) {
+		this.district = district;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -31,12 +94,7 @@ public class BuildingEntity {
 	public void setWard(String ward) {
 		this.ward = ward;
 	}
-	public Long getDistrictid() {
-		return districtid;
-	}
-	public void setDistrictid(Long districtid) {
-		this.districtid = districtid;
-	}
+
 	public String getStreet() {
 		return street;
 	}
