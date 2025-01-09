@@ -21,7 +21,7 @@ public class RentAreaEntity {
 	private String value;
 	
 	@ManyToOne
-	@JoinColumn(name = "buidingid")
+	@JoinColumn(name = "buildingid")
 	private BuildingEntity building;
 	
 	

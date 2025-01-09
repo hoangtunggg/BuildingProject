@@ -14,8 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ManyToAny;
-
 @Entity
 @Table(name="building")
 
@@ -53,8 +51,8 @@ public class BuildingEntity {
 	@Column(name="managerphonenumber")
 	private String managerPhoneNumber;
 	
-	@Column(name="emptyarea")
-	private String emptyArea;
+//	@Column(name="emptyarea")
+//	private String emptyArea;
 	
 	@ManyToOne
 	@JoinColumn(name="districtid")
@@ -137,12 +135,12 @@ public class BuildingEntity {
 	public void setManagerPhoneNumber(String managerPhoneNumber) {
 		this.managerPhoneNumber = managerPhoneNumber;
 	}
-	public String getEmptyArea() {
-		return emptyArea;
-	}
-	public void setEmptyArea(String emptyArea) {
-		this.emptyArea = emptyArea;
-	}
+//	public String getEmptyArea() {
+//		return emptyArea;
+//	}
+//	public void setEmptyArea(String emptyArea) {
+//		this.emptyArea = emptyArea;
+//	}
 	
 	
 }
